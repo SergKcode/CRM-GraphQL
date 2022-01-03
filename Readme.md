@@ -1,0 +1,1 @@
+GraphQL, apollo, react, mongo and next.js project.
