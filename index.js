@@ -1,53 +1,18 @@
-
-const { ApolloServer, gql } = require('apollo-server');
+const { ApolloServer} = require('apollo-server');
 const { ApolloServerPluginLandingPageGraphQLPlayground } = require('apollo-server-core');
-
-//Schema
-const typeDefs= gql` 
-
-    type Query{
-        getCourses: [Courses]
-    }
-
-    type Courses{
-        title:String,
-        technology:String
-    }
-`
-
-
-const courses = [
-    {
-        title: 'JavaScript ',
-        technology: 'JavaScript ES6',
-    },
-    {
-        title: 'Angular 10',
-        technology: 'Angular',
-    },
-    {
-        title: 'Node.js ',
-        technology: 'Node.js'
-    }, 
-    {
-        title: 'ReactJS ',
-        technology: 'React'
-    }
-];
-
-//Resolvers
-const resolvers={
-    Query:{
-        getCourses:()=> courses
-    }
-}
-
-
+const typeDefs = require('./db/schema');
+const resolvers =require('./db/resolvers');
 
 //server
 const server= new ApolloServer({
     typeDefs,
     resolvers,
+    context: () => {
+        const userId = 20
+        return {
+            userId
+        }
+    },
     plugins:[
         ApolloServerPluginLandingPageGraphQLPlayground({})
     ]
