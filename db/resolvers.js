@@ -20,13 +20,14 @@ const courses = [
 //Resolvers
 const resolvers = {
     Query:{
-        getCourses:( _, {input}, ctx )=> {
-            const clients = Clients.find({seller: ctx.userId})
-            console.log( ctx )
-            const result = courses.technology === input.technology
-            return result
-        }
+        getCourses:()=>"Any"
       
+    }, 
+    Mutation:{
+        newUser: (_, { input } ) =>{
+            console.log(input);
+            return "Creating"
+        }
     }
 }
 

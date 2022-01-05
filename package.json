@@ -18,6 +18,9 @@
   },
   "homepage": "https://github.com/SergKcode/CRM-GraphQL#readme",
   "dependencies": {
-    "apollo-server": "^3.6.1"
+    "apollo-server": "^3.6.1",
+    "dotenv": "^10.0.0",
+    "mongoose": "^6.1.5",
+    "nodemon": "^2.0.15"
   }
 }
