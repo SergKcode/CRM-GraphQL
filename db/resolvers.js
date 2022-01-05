@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const Product = require("../models/Product");
 const bcrypt = require('bcryptjs')
 const jwt =require ('jsonwebtoken')
 
@@ -41,7 +42,7 @@ const resolvers = {
             } catch (error) {
                 console.log(error);
             }
-        } ,
+        },
         authenticateUser: async  (_, { input } ) => {
             const {email, password}=input
 
@@ -65,7 +66,19 @@ const resolvers = {
             }
 
 
+        },
+        newProduct: async  (_, { input } ) => {
+            try{
+                const product = new Product(input)
+                const result = await product.save()
+                return result
+            }catch(error){
+                console.log(error)
+            }
+
+
         }
+
     }
 }
 
