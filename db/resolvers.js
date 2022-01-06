@@ -16,6 +16,25 @@ const resolvers = {
         getUser: async (_, {token}) =>{
             const userId = await jwt.verify(token, process.env.SECRET)
             return userId
+        },
+
+        getProducts: async ()=>{
+            try{
+                const products = await Product.find({})
+                return products
+            }catch(error){
+                console.log(error)
+            }
+        },
+        getProduct: async(_, {id})=>{
+            //check if product exist
+            const product = await Product.findById(id)
+
+            if(!product){
+                throw new Error('Product not finded')
+
+            }
+            return product
         }
       
     }, 
@@ -77,9 +96,38 @@ const resolvers = {
             }
 
 
+        },
+        updateProduct: async ( _, { id , input } )=>{
+             //check if product exist
+            let product = await Product.findById(id)
+
+            if(!product){
+                throw new Error('Product not finded')
+ 
+            }
+
+            //save in DB
+            product = await Product.findOneAndUpdate( { _id: id }, input, { new: true }) //find the object with the id field, update with input date and return new object
+
+            return product;
+            
+        },
+        deleteProduct: async(_,{id})=>{
+            let product = await Product.findById(id);
+            if(!product){
+                throw new Error('Product not finded')
+ 
+            }
+
+            await Product.findOneAndDelete({_id : id});
+
+            return "Product Deleted";
+
+
         }
 
     }
 }
 
 module.exports = resolvers
+
